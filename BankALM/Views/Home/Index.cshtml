@@ -1,9 +1,33 @@
-﻿
+﻿@model List<BankALM.Models.Customer>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Utterns Bank</h2>
 <hr/>
-
-
+<table>
+    <thead>
+    <tr>
+        <th scope="col">Customers</th>
+        <th scope="col">Accounts</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr >
+            <td style="border: 1px solid black;">@item.CustomerId @item.CustomerName</td>
+            <td style="border: 1px solid black;">
+                @foreach (var account in item.Accounts)
+                {
+                    @account.AccountNumber<text>:&nbsp;</text>@account.Balance<text> SEK </text>
+                    if (account != item.Accounts.Last())
+                    {
+                       <text><br/> </text>
+                    }                
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

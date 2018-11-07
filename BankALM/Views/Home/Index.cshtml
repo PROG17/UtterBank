@@ -15,15 +15,15 @@
     <tbody>
     @foreach (var item in Model)
     {
-        <tr>
-            <td>@item.CustomerName</td>
-            <td>
+        <tr >
+            <td style="border: 1px solid black;">@item.CustomerId @item.CustomerName</td>
+            <td style="border: 1px solid black;">
                 @foreach (var account in item.Accounts)
                 {
-                    @account.AccountNumber 
+                    @account.AccountNumber<text>:&nbsp;</text>@account.Balance<text> SEK </text>
                     if (account != item.Accounts.Last())
                     {
-                       <text>, </text>
+                       <text><br/> </text>
                     }                
                 }
             </td>

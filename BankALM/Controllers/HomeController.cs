@@ -17,7 +17,7 @@ namespace BankALM.Controllers
         }
         public IActionResult Index()
         {
-            var model = _bankContext.Customers;
+            var model = _bankContext.BankCustomers;
             return View(model);
         }
     }

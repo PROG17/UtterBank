@@ -93,6 +93,33 @@ namespace BankALM.Repo
             return true;
         }
 
+        public bool Transfer(TransactionViewModel vm)
+        {
+            if (vm.Amount <= 0)
+            {
+                vm.Message = "Amount must be greater than 0 0";
+                return false;
+            }
 
+            if (!BankAccounts.Any(x => x.AccountNumber == vm.To) || !BankAccounts.Any(x => x.AccountNumber == vm.From))
+            {
+                vm.Message = "Invalid account number";
+                return false;
+            }
+
+            var to = BankAccounts.First(x => x.AccountNumber == vm.To);
+            var from = BankAccounts.First(x => x.AccountNumber == vm.From);
+
+            if (from.Balance < vm.Amount)
+            {
+                vm.Message = "There is not enough money on the account";
+                return false;
+            }
+
+            from.Transfer(true, vm.Amount);
+            to.Transfer(false, vm.Amount);
+            vm.Message = $"New balance for {to.AccountNumber} is {to.Balance} and {from.AccountNumber} is {from.Balance}";
+            return true;
+        }
     }
 }

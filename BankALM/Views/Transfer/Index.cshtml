@@ -1,0 +1,29 @@
+﻿@model BankALM.ViewModels.TransactionViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<script>
+    window.onload = function() {
+        @if (ViewData["Message"] != null && !string.IsNullOrWhiteSpace(ViewData["Message"].ToString()))
+        {
+            <text>
+                alert('@ViewData["Message"]');
+            </text>
+        }
+    }
+</script>
+
+<form asp-controller="Transaction">
+    <label>Account Number</label><br />
+    <input type="text" asp-for="From" placeholder="From" value="" /><br /><br />
+    <input type="text" asp-for="To" placeholder="To" value="" /><br /><br />
+    <label>Amount</label><br />
+    <input asp-for="Amount" type="number" placeholder="Amount" value="" min="1" />
+
+    <input type="submit" asp-action="Transfer" value="Transfer" />
+</form>
+
+
+

@@ -70,5 +70,38 @@ namespace UnitTests
 
             Assert.False(result);
         }
+
+        [Theory]
+        [InlineData(-100, 1, 2)]
+        [InlineData(100, 1, 2)]
+        public void TransferErrorTest(int amount, int to, int from)
+        {
+            BankRepository.BankAccounts.Add(new Account() { AccountNumber = 1, Balance = 10 });
+            BankRepository.BankAccounts.Add(new Account() { AccountNumber = 2, Balance = 10 });
+            var model = new TransactionViewModel { Amount = amount, To = to , From = from};
+
+            var result = BankRepository.Transfer(model);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void TransferTest()
+        {
+            var fromExpectedValue = 5;
+            var toExpectedValue = 15;
+            BankRepository.BankAccounts.Add(new Account() { AccountNumber = 1, Balance = 10 });
+            BankRepository.BankAccounts.Add(new Account() { AccountNumber = 2, Balance = 10 });
+            var model = new TransactionViewModel { Amount = 5, To = 2, From = 1 };
+
+            var result = BankRepository.Transfer(model);
+            var fromActualValue = BankRepository.BankAccounts.First(x => x.AccountNumber == 1).Balance;
+            var toActualValue = BankRepository.BankAccounts.First(x => x.AccountNumber == 2).Balance;
+
+            Assert.True(result);
+            Assert.Equal(fromExpectedValue, fromActualValue);
+            Assert.Equal(toExpectedValue, toActualValue);
+
+        }
     }
 }

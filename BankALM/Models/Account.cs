@@ -10,5 +10,16 @@ namespace BankALM.Models
         public int AccountNumber { get; set; }
         public int CustomerId { get; set; }
         public decimal Balance { get; set; }
+
+        public void Transfer(bool from, decimal amount)
+        {
+            if(from)
+            {
+                Balance -= amount;
+            } else
+            {
+                Balance += amount;
+            }
+        }
     }
 }
